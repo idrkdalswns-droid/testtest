@@ -36,15 +36,27 @@ class Shot:
 class ScriptIngestAgent:
     """Agent 1: cleans input and extracts rough sections."""
 
-    section_pattern = re.compile(r"\n\s*(?:SCENE|장면|#)\b", re.IGNORECASE)
+    section_header_pattern = re.compile(
+        r"(?im)^\s*(?:SCENE\s*\d*\b.*|장면\s*\d*\b.*|#\s*.+)$"
+    )
 
     def run(self, script_text: str) -> List[str]:
         normalized = re.sub(r"\r\n?", "\n", script_text).strip()
         if not normalized:
             raise ValueError("스크립트가 비어 있습니다.")
 
-        parts = self.section_pattern.split(normalized)
-        sections = [p.strip() for p in parts if p.strip()]
+        headers = list(self.section_header_pattern.finditer(normalized))
+        if not headers:
+            return [normalized]
+
+        sections: List[str] = []
+        for idx, match in enumerate(headers):
+            start = match.start()
+            end = headers[idx + 1].start() if idx + 1 < len(headers) else len(normalized)
+            section = normalized[start:end].strip()
+            if section:
+                sections.append(section)
+
         return sections or [normalized]
 
 
