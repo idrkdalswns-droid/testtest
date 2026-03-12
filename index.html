@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>나의 첫 웹사이트</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <h1>환영합니다! 나의 첫 글로벌 웹사이트입니다. 🍳</h1>
+  <p>수파베이스 창고와 연결을 시도합니다...</p>
+
+  <script>
+    // ⚠️ 2단계에서 메모해둔 주소와 열쇠를 아래 따옴표 안에 정확히 넣으세요!
+    const supabaseUrl = 'https://tblekavofawiqpqcsjfy.supabase.co'
+    const supabaseKey = 'sb_publishable_rkfeIS05KYVmbPznkieZmg_rBfAl-bN'
+
+    // 창고와 연결하기
+    const mySupabase = supabase.createClient(supabaseUrl, supabaseKey);
+    
+    // 연결이 잘 되었는지 확인용 메시지
+    console.log("창고 연결 준비 완료!");
+  </script>
+</body>
+</html>
